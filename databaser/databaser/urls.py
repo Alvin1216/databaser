@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+import databaser_website.views as databaser_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('tester/', databaser_view.sql_query_sqlite),
+    path('person_select/',databaser_view.person_select),
+    path('person_insert/',databaser_view.person_insert),
+    path('person_delete/',databaser_view.person_delete),
+    path('person_update_doctor/',databaser_view.person_update_doctor),
+    path('qwe/',databaser_view.qwe),
 ]
