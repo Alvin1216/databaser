@@ -1,0 +1,403 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Insert Data</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
+
+
+</head>
+<>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">Insert Data</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="../insert/">insert<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../modified/">modified</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../delete/">delete</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../search/">search</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <br>
+    <br>
+    <div style="text-align: center;">
+    <img src="{% static './databaser_website/basic4.jpg' %}" width="100%" alt="Responsive image">
+    </div>
+    <br>
+</div>
+<div class="container">
+    <div class="row" style="padding-top: 8px;">
+        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal"  onclick="noexist_free_doctor(this)" data-whatever="@mdo">NoExist - Check free doctor</button></div>
+    </div>
+    <div class="row" style="padding-top: 8px;">
+        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" onclick="exist_busy_doctor(this)" data-target="#update" data-whatever="@mdo">Exist - Check busy doctor</button></div>
+    </div>
+    <div class="row" style="padding-top: 8px;">
+        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" onclick="notin_tkus_location(this)"  data-whatever="@mdo">NotIn - Person who not lived in Tokyo / USA</button></div>
+    </div>
+    <div class="row" style="padding-top: 8px;">
+        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" onclick="in_tkus_location(this)"  data-whatever="@mdo">In - Person who lived in Tokyo / USA</button></div>
+    </div>
+</div>
+
+<div class="container">
+    <br>
+</div>
+
+<div class="container">
+    <div class="row" style="padding-top: 8px;">
+        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal"  onclick="having(this)" data-whatever="@mdo">Having - Avg. weight over 85</button></div>
+    </div>
+    <div class="row" style="padding-top: 8px;">
+        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" onclick="exist_busy_doctor(this)" data-target="#update" data-whatever="@mdo">Exist - Check busy doctor</button></div>
+    </div>
+    <div class="row" style="padding-top: 8px;">
+        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" onclick="notin_tkus_location(this)"  data-whatever="@mdo">NotIn - Person who not lived in Tokyo / USA</button></div>
+    </div>
+    <div class="row" style="padding-top: 8px;">
+        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" onclick="in_tkus_location(this)"  data-whatever="@mdo">In - Person who lived in Tokyo / USA</button></div>
+    </div>
+</div>
+
+
+<div class="container">
+    <br>
+</div>
+
+<div class="container">
+    <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#sql_basic" data-whatever="@mdo">Basic query by SQL</button>
+    <div class="modal fade" id="sql_basic" style="z-index:9999999;"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">Basic query by SQL</div>
+            <div class="modal-body">
+          <form>
+          <div class="form-group">
+            <label for="sql_basic_query" class="col-form-label">Your SQL query:</label>
+            <input type="text" class="form-control" id="sql_basic_query">
+          </div>
+        </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="query_sql" onclick="query_sql(this)" data-dismiss="modal">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="container " style="padding-top: 10px;">
+    <hr>
+<div class="jumbotron">
+    <h3 style="text-align: center;"> RESULT</h3>
+    <div class="row">
+        <div class="col text-center">
+            <button type="button" class="btn btn-primary btn-sm" onclick="refresh_page(this)">Remove result</button>
+        </div>
+    </div>
+    <table id="test">
+    </table>
+</div>
+</div>
+
+</div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+
+<script>
+    function having(element){
+        axios.post('http://127.0.0.1:8000/having_all_average_weight_over_85/', {
+            //person_id : document.getElementById('delete_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+
+             column_data = []
+             for(var j=0;j<col.length;j++){
+                    var result = {field:'person_id', title:'代號', align:'center', width:120, visible:true, sortable:false};
+                    result['field'] = col[j];
+                    result['title'] = col[j];
+                    if (col[j].includes("id")==true){
+                        result['sortable'] = true;
+                    }
+                    column_data.push(result);
+               }
+               console.log(column_data);
+
+             $('#test').bootstrapTable({
+              classes: 'table',
+              height : 450,
+              columns:column_data
+            });
+
+            $('#test').bootstrapTable('load',rdata);
+         }).catch(function (error) {
+                alert(error);
+         });
+    }
+
+    function noexist_free_doctor(element){
+        axios.post('http://127.0.0.1:8000/check_free_doctor_by_not_exist/', {
+            person_id : document.getElementById('delete_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+
+             column_data = []
+             for(var j=0;j<col.length;j++){
+                    var result = {field:'person_id', title:'代號', align:'center', width:120, visible:true, sortable:false};
+                    result['field'] = col[j];
+                    result['title'] = col[j];
+                    if (col[j].includes("id")==true){
+                        result['sortable'] = true;
+                    }
+                    column_data.push(result);
+               }
+               console.log(column_data);
+
+             $('#test').bootstrapTable({
+              classes: 'table',
+              height : 450,
+              columns:column_data
+            });
+
+            $('#test').bootstrapTable('load',rdata);
+         }).catch(function (error) {
+                alert(error);
+         });
+    }
+
+    function refresh_page(element){
+        window.location.reload(false);
+    }
+
+    function exist_busy_doctor(element){
+        axios.post('http://127.0.0.1:8000/check_busy_doctor_by_exist/', {
+            person_id : document.getElementById('delete_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+
+             column_data = []
+             for(var j=0;j<col.length;j++){
+                    var result = {field:'person_id', title:'代號', align:'center', width:120, visible:true, sortable:false};
+                    result['field'] = col[j];
+                    result['title'] = col[j];
+                    if (col[j].includes("id")==true){
+                        result['sortable'] = true;
+                    }
+                    column_data.push(result);
+               }
+               console.log(column_data);
+
+             $('#test').bootstrapTable({
+              classes: 'table',
+              height : 450,
+              columns:column_data
+            });
+
+            $('#test').bootstrapTable('load',rdata);
+         }).catch(function (error) {
+                alert(error);
+         });
+    }
+
+    function in_tkus_location(element){
+        axios.post('http://127.0.0.1:8000/check_person_location_by_in/', {
+            person_id : document.getElementById('delete_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+
+             column_data = []
+             for(var j=0;j<col.length;j++){
+                    var result = {field:'person_id', title:'代號', align:'center', width:120, visible:true, sortable:false};
+                    result['field'] = col[j];
+                    result['title'] = col[j];
+                    if (col[j].includes("id")==true){
+                        result['sortable'] = true;
+                    }
+                    column_data.push(result);
+               }
+               console.log(column_data);
+
+             $('#test').bootstrapTable({
+              classes: 'table',
+              height : 450,
+              columns:column_data
+            });
+
+            $('#test').bootstrapTable('load',rdata);
+         }).catch(function (error) {
+                alert(error);
+         });
+    }
+
+    function notin_tkus_location(element){
+        axios.post('http://127.0.0.1:8000/check_person_location_by_notin/', {
+            person_id : document.getElementById('delete_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+
+             column_data = []
+             for(var j=0;j<col.length;j++){
+                    var result = {field:'person_id', title:'代號', align:'center', width:120, visible:true, sortable:false};
+                    result['field'] = col[j];
+                    result['title'] = col[j];
+                    if (col[j].includes("id")==true){
+                        result['sortable'] = true;
+                    }
+                    column_data.push(result);
+               }
+               console.log(column_data);
+
+             $('#test').bootstrapTable({
+              classes: 'table',
+              height : 450,
+              columns:column_data
+            });
+
+            $('#test').bootstrapTable('load',rdata);
+         }).catch(function (error) {
+                alert(error);
+         });
+    }
+
+    function refresh(element){
+        axios.post('http://127.0.0.1:8000/select_all_person/', {
+            person_id : document.getElementById('delete_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+             $('#demo').bootstrapTable('load',rdata);
+         }).catch(function (error) {
+                alert(error);
+         });
+    }
+
+    function refresh_location(element){
+        axios.post('http://127.0.0.1:8000/select_all_location/', {
+            person_id : document.getElementById('delete_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+             $('#location_table').bootstrapTable('load',rdata);
+         }).catch(function (error) {
+                alert(error);
+         });
+    }
+
+     function refresh_doctor(element){
+        axios.post('http://127.0.0.1:8000/select_all_doctor/', {
+            person_id : document.getElementById('delete_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+             $('#doctor_table').bootstrapTable('load',rdata);
+         }).catch(function (error) {
+                alert(error);
+         });
+    }
+</script>
+
+</html>

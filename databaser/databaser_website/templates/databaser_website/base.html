@@ -2,70 +2,603 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="generator" content="Mobirise v4.10.15, mobirise.com">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-    <link rel="shortcut icon" href="../commom_static/assets/images/logo2.png" type="image/x-icon">
-    <meta name="description" content="">
+    <meta charset="utf-8">
+    <title>Insert Data</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
 
-    <title>Home</title>
-    <!-- CSS only -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<!--    <link rel="stylesheet" href="node_modules/@coreui/coreui/dist/css/coreui.min.css">-->
 
-    <!-- JS, Popper.js, and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-<!--<script src="node_modules/@coreui/coreui/dist/js/coreui.bundle.min.js"></script>-->
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
+</head>
+<>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">Insert Data</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-    <!-- Custom styles for this template -->
-    <link href="navbar-top.css" rel="stylesheet">
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-  <a class="navbar-brand" href="#">Top navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </li>
-    </ul>
-  </div>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="../insert/">insert<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../modified/">modified</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../delete/">delete</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../search/">search</a>
+            </li>
+        </ul>
+    </div>
 </nav>
 
-<main role="main" class="container">
-  <div class="jumbotron">
-    <h1>Navbar example</h1>
-    <p class="lead">This example is a quick exercise to illustrate how the top-aligned navbar works. As you scroll, this navbar remains in its original position and moves with the rest of the page.</p>
-    <a class="btn btn-lg btn-primary" href="/docs/4.5/components/navbar/" role="button">View navbar docs &raquo;</a>
+<div class="container">
+    <br>
+    <br>
+    <div style="text-align: center;">
+    <img src="{% static './databaser_website/basic3.jpg' %}" width="100%" alt="Responsive image">
+    </div>
+    <br>
+</div>
+
+
+<div class="container">
+    <div class="row" style="padding-top: 8px;">
+    <div class="col">
+      <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#select" onclick="select_all_person(this)">Display table-person</button>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#select" onclick="refresh(this)">Refresh table-person</button>
+    </div>
   </div>
-</main>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd" crossorigin="anonymous"></script></body>
+    <div class="row" style="padding-top: 8px;">
+        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#insert" data-whatever="@mdo">Insert new data to table-person</button></div>
+    </div>
+    <div class="row" style="padding-top: 8px;">
+        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#update" data-whatever="@mdo">Update doctor_id from table-person</button></div>
+    </div>
+    <div class="row" style="padding-top: 8px;">
+        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#delete" data-whatever="@mdo">Delete row in table-person with id</button></div>
+    </div>
+
+
+    <div class="modal fade" id="update" style="z-index:9999999;"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">Update doctor_id from table-person</div>
+            <div class="modal-body">
+         <form>
+          <div class="form-group">
+            <label for="update_id" class="col-form-label">Modified person_id::</label>
+            <input type="text" class="form-control" id="update_id">
+          </div>
+          <div class="form-group">
+            <label for="m_doctor_id" class="col-form-label">Modified doctor_id:</label>
+            <input type="text" class="form-control" id="m_doctor_id">
+          </div>
+        </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="update_submit" onclick="update(this)" data-dismiss="modal">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="modal fade" id="insert" style="z-index:9999999;"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">TInsert new data to table-person</div>
+            <div class="modal-body">
+          <form>
+          <div class="form-group">
+            <label for="name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="name" placeholder="Jerry Yang">
+          </div>
+          <div class="form-group">
+            <label for="age" class="col-form-label">Age:</label>
+            <input type="text" class="form-control" id="age" placeholder="Example : 23">
+          </div>
+           <div class="form-group">
+            <label for="gender" class="col-form-label">Gender:</label>
+            <input type="text" class="form-control" id="gender" placeholder="Example : Male/Female">
+          </div>
+           <div class="form-group">
+            <label for="race" class="col-form-label">Race:</label>
+            <input type="text" class="form-control" id="race" placeholder="Example : Black/White/Unknown/Asian">
+          </div>
+          <div class="form-group">
+            <label for="birth_datetime" class="col-form-label">Birthday :</label>
+            <input type="text" class="form-control" id="birth_datetime" placeholder="Example : 2020-01-01">
+          </div>
+          <div class="form-group">
+            <label for="location_id" class="col-form-label">Location_id:</label>
+            <input type="text" class="form-control" id="location_id" placeholder="Example : 30">
+          </div>
+          <div class="form-group">
+            <label for="doctor_id" class="col-form-label">Doctor_id:</label>
+            <input type="text" class="form-control" id="doctor_id" placeholder="Example : 324">
+          </div>
+
+        </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="insert_submit" onclick="insert(this)" data-dismiss="modal">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="modal fade" id="delete" style="z-index:9999999;"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">Delete row in table-person with id</div>
+            <div class="modal-body">
+          <form>
+          <div class="form-group">
+            <label for="delete_id" class="col-form-label">The Person_id want to delete:</label>
+            <input type="text" class="form-control" id="delete_id">
+          </div>
+        </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="delete_submit" onclick="deletes(this)" data-dismiss="modal">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="container">
+    <br>
+</div>
+
+<div class="container">
+    <button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#sql_basic" data-whatever="@mdo">Basic query by SQL</button>
+    <div class="modal fade" id="sql_basic" style="z-index:9999999;"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">Basic query by SQL</div>
+            <div class="modal-body">
+          <form>
+          <div class="form-group">
+            <label for="sql_basic_query" class="col-form-label">Your SQL query:</label>
+            <input type="text" class="form-control" id="sql_basic_query">
+          </div>
+        </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="query_sql" onclick="query_sql(this)" data-dismiss="modal">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="container " style="padding-top: 10px;">
+    <hr>
+<div class="jumbotron">
+    <h3 style="text-align: center;"> PERSON TABLE</h3>
+    <table id="demo">
+    </table>
+</div>
+</div>
+
+<div class="container" style="padding-top: 8px;">
+    <hr>
+    <div class="jumbotron">
+    <h3 style="text-align: center;">LOCATION TABLE</h3>
+    <div class="row">
+        <div class="col text-center">
+            <button type="button" class="btn btn-primary btn-sm" onclick="refresh_location(this)">Refresh location table</button>
+        </div>
+    </div>
+    <table id="location_table">
+    </table>
+    </div>
+</div>
+<div class="container" style="padding-top: 8px;">
+    <hr>
+    <div class="jumbotron">
+    <h3 style="text-align: center;">DOCTOR TABLE</h3>
+    <div class="row">
+        <div class="col text-center">
+            <button type="button" class="btn btn-primary btn-sm" onclick="refresh_location(this)">Refresh doctor table</button>
+        </div>
+    </div>
+    <table id="doctor_table">
+    </table>
+    </div>
+</div>
+
+
+
+</div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+
+
+<script>
+
+    function update(element){
+        var update_id = document.getElementById('update_id').value;
+        console.log(update_id);
+        var m_doctor_id = document.getElementById('m_doctor_id').value;
+        console.log(m_doctor_id);
+
+        axios.post('http://127.0.0.1:8000/person_update_doctor/', {
+            "person_id": document.getElementById('update_id').value,
+            "doctor_id": document.getElementById('m_doctor_id').value
+         }).then(function(response) {
+               alert("Update successful!");
+               console.log(response)
+         }).catch(function (error) {
+                alert(error);
+         });
+
+         $('#update input').val('');
+    }
+
+    function insert(element){
+        console.log(document.getElementById('name').value)
+        axios.post('http://127.0.0.1:8000/person_insert/', {
+            name : document.getElementById('name').value,
+            age : document.getElementById('age').value,
+            location_id : document.getElementById('location_id').value,
+            doctor_id : document.getElementById('doctor_id').value,
+            birth_datetime : document.getElementById('birth_datetime').value,
+            race : document.getElementById('race').value,
+            gender : document.getElementById('gender').value
+         }).then(function(response) {
+               console.log(response)
+               alert("Insert successful!");
+         }).catch(function (error) {
+                alert(error);
+         });
+         $('#insert input').val('');
+    }
+
+     function deletes(element){
+        console.log(document.getElementById('name').value)
+        axios.post('http://127.0.0.1:8000/person_delete/', {
+            person_id : document.getElementById('delete_id').value
+         }).then(function(response) {
+               console.log(response)
+               alert("Delete successful!");
+         }).catch(function (error) {
+                alert(error);
+         });
+         $('#delete input').val('');
+    }
+
+     function query_sql(element){
+        console.log(document.getElementById('name').value)
+        axios.post('http://127.0.0.1:8000/sql_query_sqlite/', {
+            query_string : document.getElementById('sql_basic_query').value
+         }).then(function(response) {
+               console.log(response)
+               alert("Query by SQL successful!");
+         }).catch(function (error) {
+                alert(error);
+         });
+         $('#sql_basic input').val('');
+    }
+
+</script>
+
+<script>
+    axios.post('http://127.0.0.1:8000/select_all_person/', {
+            person_id : document.getElementById('delete_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+
+            column_data = []
+             for(var j=0;j<col.length;j++){
+                    var result = {field:'person_id', title:'代號', align:'center', width:120, visible:true, sortable:false};
+                    result['field'] = col[j];
+                    result['title'] = col[j];
+                    if (col[j].includes("id")==true){
+                        result['sortable'] = true;
+                    }
+                    column_data.push(result);
+               }
+               console.log(column_data);
+             $('#demo').bootstrapTable({
+              columns:column_data,
+              classes:'table',
+              data : rdata,//所有資料
+              uniqueId:'person_id', //哪一個欄位是key
+              sortName:'person_id', //依照那個欄位排序
+              height : 450,
+              pagination : true, //使否要分頁
+
+              //可於ToolBar上顯示的按鈕
+              showColumns : false, //顯示/隱藏哪些欄位
+              showToggle : false, //名片式/table式切換
+              showPaginationSwitch : false, //分頁/不分頁切換
+              showRefresh : true, //重新整理
+              search : false, //查詢
+
+              onPageChange:function(currentPage, pageSize) {
+                console.log("目前頁數:"+currentPage+",一頁顯示:"+pageSize+"筆");
+              },
+              pageSize : 10, //一頁顯示幾筆
+              pageList : [ 10, 20, 50, 100], //一頁顯示幾筆的選項
+
+              formatRecordsPerPage:function(pageSize) {
+                return '&nbsp;&nbsp;每頁顯示' + pageSize + '筆';
+              },
+              formatShowingRows:function(fromIndex, toIndex, totalSize) {
+                //目前第幾頁
+                var currentPage = Math.ceil(fromIndex / this.pageSize);
+                //總共幾頁
+                var totalPageCount = Math.ceil(totalSize / this.pageSize);
+                return '第'+currentPage+'頁&nbsp;&nbsp;共'+totalPageCount+'頁';
+              }
+            });
+         }).catch(function (error) {
+                alert(error);
+         });
+
+     axios.post('http://127.0.0.1:8000/select_all_location/', {
+            person_id : document.getElementById('delete_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+
+            column_data = []
+             for(var j=0;j<col.length;j++){
+                    var result = {field:'person_id', title:'代號', align:'center', width:120, visible:true, sortable:false};
+                    result['field'] = col[j];
+                    result['title'] = col[j];
+                    if (col[j].includes("id")==true){
+                        result['sortable'] = true;
+                    }
+                    column_data.push(result);
+               }
+               console.log(column_data);
+             $('#location_table').bootstrapTable({
+              columns:column_data,
+              classes:'table',
+              data : rdata,//所有資料
+              uniqueId:'location_id', //哪一個欄位是key
+              sortName:'location_id', //依照那個欄位排序
+              height : 450,
+              pagination : true, //使否要分頁
+
+              //可於ToolBar上顯示的按鈕
+              showColumns : false, //顯示/隱藏哪些欄位
+              showToggle : false, //名片式/table式切換
+              showPaginationSwitch : false, //分頁/不分頁切換
+              showRefresh : true, //重新整理
+              search : false, //查詢
+
+              onPageChange:function(currentPage, pageSize) {
+                console.log("目前頁數:"+currentPage+",一頁顯示:"+pageSize+"筆");
+              },
+              pageSize : 10, //一頁顯示幾筆
+              pageList : [ 10, 20, 50, 100], //一頁顯示幾筆的選項
+
+              formatRecordsPerPage:function(pageSize) {
+                return '&nbsp;&nbsp;每頁顯示' + pageSize + '筆';
+              },
+              formatShowingRows:function(fromIndex, toIndex, totalSize) {
+                //目前第幾頁
+                var currentPage = Math.ceil(fromIndex / this.pageSize);
+                //總共幾頁
+                var totalPageCount = Math.ceil(totalSize / this.pageSize);
+                return '第'+currentPage+'頁&nbsp;&nbsp;共'+totalPageCount+'頁';
+              }
+            });
+         }).catch(function (error) {
+                alert(error);
+         });
+
+              axios.post('http://127.0.0.1:8000/select_all_doctor/', {
+            person_id : document.getElementById('delete_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+
+            column_data = []
+             for(var j=0;j<col.length;j++){
+                    var result = {field:'person_id', title:'代號', align:'center', width:120, visible:true, sortable:false};
+                    result['field'] = col[j];
+                    result['title'] = col[j];
+                    if (col[j].includes("id")==true){
+                        result['sortable'] = true;
+                    }
+                    column_data.push(result);
+               }
+               console.log(column_data);
+             $('#doctor_table').bootstrapTable({
+              columns:column_data,
+              classes:'table',
+              data : rdata,//所有資料
+              uniqueId:col[0], //哪一個欄位是key
+              sortName:col[0], //依照那個欄位排序
+              height : 450,
+              pagination : true, //使否要分頁
+
+              //可於ToolBar上顯示的按鈕
+              showColumns : false, //顯示/隱藏哪些欄位
+              showToggle : false, //名片式/table式切換
+              showPaginationSwitch : false, //分頁/不分頁切換
+              showRefresh : true, //重新整理
+              search : false, //查詢
+
+              onPageChange:function(currentPage, pageSize) {
+                console.log("目前頁數:"+currentPage+",一頁顯示:"+pageSize+"筆");
+              },
+              pageSize : 10, //一頁顯示幾筆
+              pageList : [ 10, 20, 50, 100], //一頁顯示幾筆的選項
+
+              formatRecordsPerPage:function(pageSize) {
+                return '&nbsp;&nbsp;每頁顯示' + pageSize + '筆';
+              },
+              formatShowingRows:function(fromIndex, toIndex, totalSize) {
+                //目前第幾頁
+                var currentPage = Math.ceil(fromIndex / this.pageSize);
+                //總共幾頁
+                var totalPageCount = Math.ceil(totalSize / this.pageSize);
+                return '第'+currentPage+'頁&nbsp;&nbsp;共'+totalPageCount+'頁';
+              }
+            });
+         }).catch(function (error) {
+                alert(error);
+         });
+</script>
+
+<script>
+    function select_all_person(element){
+
+        var aaa = document.getElementById('tester2').value;
+        console.log(aaa);
+        var url = 'http://127.0.0.1:8000/';
+        var new_url = url.concat(aaa,'/');
+        console.log(new_url);
+        axios.post(new_url, {
+            person_id : document.getElementById('delete_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+
+             column_data = []
+             for(var j=0;j<col.length;j++){
+                    var result = {field:'person_id', title:'代號', align:'center', width:120, visible:true, sortable:false};
+                    result['field'] = col[j];
+                    result['title'] = col[j];
+                    if (col[j].includes("id")==true){
+                        result['sortable'] = true;
+                    }
+                    column_data.push(result);
+               }
+               console.log(column_data);
+
+             $('#test').bootstrapTable({
+              classes: 'table',
+              height : 450
+            });
+
+            $('#test').bootstrapTable('load',{data:rdata,columns:column_data});
+         }).catch(function (error) {
+                alert(error);
+         });
+    }
+
+    function refresh(element){
+        axios.post('http://127.0.0.1:8000/select_all_person/', {
+            person_id : document.getElementById('delete_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+             $('#demo').bootstrapTable('load',rdata);
+         }).catch(function (error) {
+                alert(error);
+         });
+    }
+
+    function refresh_location(element){
+        axios.post('http://127.0.0.1:8000/select_all_location/', {
+            person_id : document.getElementById('delete_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+             $('#location_table').bootstrapTable('load',rdata);
+         }).catch(function (error) {
+                alert(error);
+         });
+    }
+
+     function refresh_doctor(element){
+        axios.post('http://127.0.0.1:8000/select_all_doctor/', {
+            person_id : document.getElementById('delete_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+             $('#doctor_table').bootstrapTable('load',rdata);
+         }).catch(function (error) {
+                alert(error);
+         });
+    }
+</script>
+
 </html>
