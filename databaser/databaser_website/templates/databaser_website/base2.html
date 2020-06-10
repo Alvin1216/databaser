@@ -15,7 +15,7 @@
 </head>
 <>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Insert Data</a>
+    <a class="navbar-brand" href="#">Database Final Project</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -23,17 +23,11 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="../qwe/">basic</a>
+            </li>
             <li class="nav-item active">
-                <a class="nav-link" href="../insert/">insert<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../modified/">modified</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../delete/">delete</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../search/">search</a>
+                <a class="nav-link" href="../qwe2/">advanced<span class="sr-only">(current)</span></a>
             </li>
         </ul>
     </div>
@@ -70,14 +64,36 @@
         <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal"  onclick="having(this)" data-whatever="@mdo">Having - Avg. weight over 85</button></div>
     </div>
     <div class="row" style="padding-top: 8px;">
-        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" onclick="exist_busy_doctor(this)" data-target="#update" data-whatever="@mdo">Exist - Check busy doctor</button></div>
+        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal"  data-target="#count_modal" data-whatever="@mdo">Count - Count unique condition to a person</button></div>
     </div>
     <div class="row" style="padding-top: 8px;">
-        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" onclick="notin_tkus_location(this)"  data-whatever="@mdo">NotIn - Person who not lived in Tokyo / USA</button></div>
+        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" onclick="avg(this)"  data-whatever="@mdo">Average - People average temperture in measurement</button></div>
     </div>
     <div class="row" style="padding-top: 8px;">
-        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" onclick="in_tkus_location(this)"  data-whatever="@mdo">In - Person who lived in Tokyo / USA</button></div>
+        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" onclick="max(this)"  data-whatever="@mdo">Max - People maximun press in measurement</button></div>
     </div>
+    <div class="row" style="padding-top: 8px;">
+        <div class="col"><button type="button" class="btn btn-primary btn-block" data-toggle="modal" onclick="min(this)"  data-whatever="@mdo">Min - People minimize press in measurement</button></div>
+    </div>
+
+    <div class="modal fade" id="count_modal" style="z-index:9999999;"  role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">Count a person unique conditions</div>
+                <div class="modal-body">
+              <form>
+              <div class="form-group">
+                <label for="count_id" class="col-form-label">The person_id that want to count:</label>
+                <input type="text" class="form-control" id="count_id">
+              </div>
+            </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="query_sql" onclick="count(this)" data-dismiss="modal">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+     </div>
 </div>
 
 
@@ -132,6 +148,204 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 
 <script>
+    function query_sql(element){
+        //console.log(document.getElementById('name').value)
+        axios.post('http://127.0.0.1:8000/sql_query_sqlite_select/', {
+            query_string : document.getElementById('sql_basic_query').value
+         }).then(function(response) {
+               console.log(response)
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+
+             column_data = []
+             for(var j=0;j<col.length;j++){
+                    var result = {field:'person_id', title:'代號', align:'center', width:120, visible:true, sortable:false};
+                    result['field'] = col[j];
+                    result['title'] = col[j];
+                    if (col[j].includes("id")==true){
+                        result['sortable'] = true;
+                    }
+                    column_data.push(result);
+               }
+               console.log(column_data);
+
+             $('#test').bootstrapTable({
+              classes: 'table',
+              height : 450,
+              columns:column_data
+            });
+
+            $('#test').bootstrapTable('load',rdata);
+         }).catch(function (error) {
+                alert(error);
+         });
+         $('#sql_basic input').val('');
+    }
+
+    function min(element){
+        axios.post('http://127.0.0.1:8000/min_measurement_pressure_for_people/', {
+            person_id : document.getElementById('count_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+
+             column_data = []
+             for(var j=0;j<col.length;j++){
+                    var result = {field:'person_id', title:'代號', align:'center', width:120, visible:true, sortable:false};
+                    result['field'] = col[j];
+                    result['title'] = col[j];
+                    if (col[j].includes("id")==true){
+                        result['sortable'] = true;
+                    }
+                    column_data.push(result);
+               }
+               console.log(column_data);
+
+             $('#test').bootstrapTable({
+              classes: 'table',
+              height : 450,
+              columns:column_data
+            });
+
+            $('#test').bootstrapTable('load',rdata);
+         }).catch(function (error) {
+                alert(error);
+         });
+    }
+    function max(element){
+        axios.post('http://127.0.0.1:8000/max_measurement_pressure_for_people/', {
+            person_id : document.getElementById('count_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+
+             column_data = []
+             for(var j=0;j<col.length;j++){
+                    var result = {field:'person_id', title:'代號', align:'center', width:120, visible:true, sortable:false};
+                    result['field'] = col[j];
+                    result['title'] = col[j];
+                    if (col[j].includes("id")==true){
+                        result['sortable'] = true;
+                    }
+                    column_data.push(result);
+               }
+               console.log(column_data);
+
+             $('#test').bootstrapTable({
+              classes: 'table',
+              height : 450,
+              columns:column_data
+            });
+
+            $('#test').bootstrapTable('load',rdata);
+         }).catch(function (error) {
+                alert(error);
+         });
+    }
+    function avg(element){
+        axios.post('http://127.0.0.1:8000/avg_measurement_temp_for_people/', {
+            person_id : document.getElementById('count_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+
+             column_data = []
+             for(var j=0;j<col.length;j++){
+                    var result = {field:'person_id', title:'代號', align:'center', width:120, visible:true, sortable:false};
+                    result['field'] = col[j];
+                    result['title'] = col[j];
+                    if (col[j].includes("id")==true){
+                        result['sortable'] = true;
+                    }
+                    column_data.push(result);
+               }
+               console.log(column_data);
+
+             $('#test').bootstrapTable({
+              classes: 'table',
+              height : 450,
+              columns:column_data
+            });
+
+            $('#test').bootstrapTable('load',rdata);
+         }).catch(function (error) {
+                alert(error);
+         });
+    }
+    function count(element){
+        axios.post('http://127.0.0.1:8000/count_uniquc_condition/', {
+            person_id : document.getElementById('count_id').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+
+             column_data = []
+             for(var j=0;j<col.length;j++){
+                    var result = {field:'person_id', title:'代號', align:'center', width:120, visible:true, sortable:false};
+                    result['field'] = col[j];
+                    result['title'] = col[j];
+                    if (col[j].includes("id")==true){
+                        result['sortable'] = true;
+                    }
+                    column_data.push(result);
+               }
+               console.log(column_data);
+
+             $('#test').bootstrapTable({
+              classes: 'table',
+              height : 450,
+              columns:column_data
+            });
+
+            $('#test').bootstrapTable('load',rdata);
+         }).catch(function (error) {
+                alert(error);
+         });
+    }
     function having(element){
         axios.post('http://127.0.0.1:8000/having_all_average_weight_over_85/', {
             //person_id : document.getElementById('delete_id').value
@@ -174,7 +388,7 @@
 
     function noexist_free_doctor(element){
         axios.post('http://127.0.0.1:8000/check_free_doctor_by_not_exist/', {
-            person_id : document.getElementById('delete_id').value
+            person_id : 0
          }).then(function(response) {
                console.log(response);
                console.log(response.data);
@@ -218,7 +432,7 @@
 
     function exist_busy_doctor(element){
         axios.post('http://127.0.0.1:8000/check_busy_doctor_by_exist/', {
-            person_id : document.getElementById('delete_id').value
+            person_id : 0
          }).then(function(response) {
                console.log(response);
                console.log(response.data);
@@ -258,7 +472,7 @@
 
     function in_tkus_location(element){
         axios.post('http://127.0.0.1:8000/check_person_location_by_in/', {
-            person_id : document.getElementById('delete_id').value
+            person_id : 0
          }).then(function(response) {
                console.log(response);
                console.log(response.data);
@@ -298,7 +512,7 @@
 
     function notin_tkus_location(element){
         axios.post('http://127.0.0.1:8000/check_person_location_by_notin/', {
-            person_id : document.getElementById('delete_id').value
+            person_id : 0
          }).then(function(response) {
                console.log(response);
                console.log(response.data);
