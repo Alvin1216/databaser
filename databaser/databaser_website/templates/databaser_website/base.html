@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Insert Data</title>
+    <title>Database Final Project</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -281,7 +281,7 @@
 
      function query_sql(element){
         console.log(document.getElementById('name').value)
-        axios.post('http://127.0.0.1:8000/sql_query_sqlite/', {
+        axios.post('http://127.0.0.1:8000/sql_query_sqlite_select/', {
             query_string : document.getElementById('sql_basic_query').value
          }).then(function(response) {
                console.log(response)

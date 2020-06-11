@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Insert Data</title>
+    <title>Database Final Project</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -96,13 +96,39 @@
      </div>
 </div>
 
+<div class="container">
+    <br>
+</div>
+
+<div class="container">
+    <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#sum" data-whatever="@mdo">Sum - Sum the measurement of a year </button>
+    <div class="modal fade" id="sum" style="z-index:9999999;"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"> Sum the measurement of a year </div>
+            <div class="modal-body">
+          <form>
+          <div class="form-group">
+            <label for="sum_year" class="col-form-label">The year you want to sum:</label>
+            <input type="text" class="form-control" id="sum_year">
+          </div>
+        </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="query_sql" onclick="sum(this)" data-dismiss="modal">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 
 <div class="container">
     <br>
 </div>
 
 <div class="container">
-    <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#sql_basic" data-whatever="@mdo">Basic query by SQL</button>
+    <button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#sql_basic" data-whatever="@mdo">Basic query by SQL</button>
     <div class="modal fade" id="sql_basic" style="z-index:9999999;"  role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -148,6 +174,47 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 
 <script>
+
+    function sum(element){
+        axios.post('http://127.0.0.1:8000/sum_measurement_one_year_for_people/', {
+            year : document.getElementById('sum_year').value
+         }).then(function(response) {
+               console.log(response);
+               console.log(response.data);
+               var col = response.data['col'];
+               var data = response.data['data'];
+               var rdata=[]
+               for(var j=0;j<data.length;j++){
+                    var result = {};
+                    col.forEach((col, i) => result[col] = data[j][i]);
+                    rdata.push(result);
+               }
+             console.log(rdata);
+
+             column_data = []
+             for(var j=0;j<col.length;j++){
+                    var result = {field:'person_id', title:'代號', align:'center', width:120, visible:true, sortable:false};
+                    result['field'] = col[j];
+                    result['title'] = col[j];
+                    if (col[j].includes("id")==true){
+                        result['sortable'] = true;
+                    }
+                    column_data.push(result);
+               }
+               console.log(column_data);
+
+             $('#test').bootstrapTable({
+              classes: 'table',
+              height : 450,
+              columns:column_data
+            });
+
+            $('#test').bootstrapTable('load',rdata);
+         }).catch(function (error) {
+                alert(error);
+         });
+    }
+
     function query_sql(element){
         //console.log(document.getElementById('name').value)
         axios.post('http://127.0.0.1:8000/sql_query_sqlite_select/', {

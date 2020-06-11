@@ -6,7 +6,7 @@ import sqlite3,json
 import sys
 import traceback
 
-conn = sqlite3.connect('/Users/alvinhuang/Desktop/covid_database/covid_data.db',check_same_thread = False)
+conn = sqlite3.connect('covid_data.db',check_same_thread = False)
 conn.execute("PRAGMA foreign_keys = ON")
 conn.commit()
 
@@ -36,21 +36,33 @@ def sql_query_sqlite_select(request):
         print(json_data)
         qse = str(json_data['query_string'])
         print(qse)
+        key = 0
+        if(qse.lower().find('update') == 0 or qse.lower().find('delete') == 0 or qse.lower().find('insert') == 0):
+            key=1
+        print(key)
         try:
-            cursor = conn.execute(qse)
-            conn.commit()
-            names = list(map(lambda x: x[0], cursor.description))
-            print(names)
             return_data = {}
-            return_data['col'] = names
-            row_data = []
-            for row in cursor:
-                print(list(row))
-                row_data.append(list(row))
-            return_data['data'] = row_data
-            return JsonResponse(return_data)
-        except:
-            return JsonResponse({"status": "SQL wrong~"})
+            if(key == 1):
+                conn.execute(qse)
+                conn.commit()
+                return_data['col'] = ['status']
+                return_data['data'] = ['successful!']
+                print("success!")
+                return JsonResponse(return_data)
+            else:
+                cursor = conn.execute(qse)
+                names = list(map(lambda x: x[0], cursor.description))
+                print(names)
+                return_data = {}
+                return_data['col'] = names
+                row_data = []
+                for row in cursor:
+                    print(list(row))
+                    row_data.append(list(row))
+                return_data['data'] = row_data
+                return JsonResponse(return_data)
+        except Exception as e:
+            return JsonResponse({"status": e})
     else:
         return JsonResponse({"status": "205"})
 @csrf_exempt
@@ -347,7 +359,7 @@ def check_person_location_by_notin(request):
 @csrf_exempt
 def having_all_average_weight_over_85(request):
     if request.method == "POST":
-        update_qse = "SELECT person_id,AVG(value_as_number) FROM new_measurement WHERE measurement_name = \"Body weight\" GROUP BY person_id HAVING AVG(value_as_number)>85"
+        update_qse = "SELECT person_id,AVG(value_as_number) FROM measurement WHERE measurement_name = \"Body weight\" GROUP BY person_id HAVING AVG(value_as_number)>85"
         print(update_qse)
         try:
             cursor = conn.execute(update_qse)
@@ -375,7 +387,7 @@ def count_uniquc_condition(request):
     if request.method == "POST":
         json_data = json.loads(request.body)
         person_id = json_data['person_id']
-        update_qse =  "SELECT COUNT (DISTINCT condition_occurrence_id) FROM condition_person WHERE person_id = {person_id}".format(person_id=person_id)
+        update_qse =  "SELECT COUNT (DISTINCT condition_name) FROM condition WHERE person_id = {person_id}".format(person_id=person_id)
         print(update_qse)
         try:
             cursor = conn.execute(update_qse)
@@ -403,7 +415,7 @@ def avg_measurement_temp_for_people(request):
     if request.method == "POST":
         #json_data = json.loads(request.body)
         #person_id = json_data['person_id']
-        update_qse =  "SELECT person_id,ROUND(AVG(value_as_number),1) FROM new_measurement WHERE measurement_name = \"Body temperature\" GROUP BY person_id"
+        update_qse =  "SELECT person_id,ROUND(AVG(value_as_number),1) FROM measurement WHERE measurement_name = \"Body temperature\" GROUP BY person_id"
         print(update_qse)
         try:
             cursor = conn.execute(update_qse)
@@ -430,7 +442,7 @@ def avg_measurement_temp_for_people(request):
 def max_measurement_pressure_for_people(request):
     if request.method == "POST":
         #person_id = request.POST['person_id']
-        update_qse =  "SELECT person_id,ROUND(MAX(value_as_number),1) FROM new_measurement WHERE measurement_name = \"Diastolic blood pressure\" GROUP BY person_id"
+        update_qse =  "SELECT person_id,ROUND(MAX(value_as_number),1) FROM measurement WHERE measurement_name = \"Diastolic blood pressure\" GROUP BY person_id"
         print(update_qse)
         try:
             cursor = conn.execute(update_qse)
@@ -456,7 +468,7 @@ def max_measurement_pressure_for_people(request):
 @csrf_exempt
 def min_measurement_pressure_for_people(request):
     if request.method == "POST":
-        update_qse =  "SELECT person_id,ROUND(MIN(value_as_number),1) FROM new_measurement WHERE measurement_name = \"Diastolic blood pressure\" GROUP BY person_id"
+        update_qse =  "SELECT person_id,ROUND(MIN(value_as_number),1) FROM measurement WHERE measurement_name = \"Diastolic blood pressure\" GROUP BY person_id"
         try:
             cursor = conn.execute(update_qse)
             names = list(map(lambda x: x[0], cursor.description))
@@ -481,16 +493,26 @@ def min_measurement_pressure_for_people(request):
 @csrf_exempt
 def sum_measurement_one_year_for_people(request):
     if request.method == "POST":
-        year = request.POST['year']
-        update_qse =  "SELECT SUM(numofyear) FROM (SELECT person_id,count(measurement_id) AS numofyear FROM new_measurement" \
+        json_data = json.loads(request.body)
+        year = json_data['year']
+        update_qse =  "SELECT SUM(numofyear) FROM (SELECT person_id,count(measurement_id) AS numofyear FROM measurement" \
                       " WHERE measurement_date>=\"{year}-01-01\" AND measurement_date<=\"{year}-12-31\" GROUP BY person_id)".format(year=year)
         print(update_qse)
         try:
             cursor = conn.execute(update_qse)
+            names = list(map(lambda x: x[0], cursor.description))
+            return_data = {}
+            print(names)
+            return_data['col'] = names
+            row_data = []
+            for row in cursor:
+                print(list(row))
+                row_data.append(list(row))
+            return_data['data'] = row_data
             for row in cursor:
                 print(row)
             print("success!")
-            return JsonResponse({"status": "200"})
+            return JsonResponse(return_data)
         except Exception as e:
             get_error(e)
             return JsonResponse({"status": "SQL wrong~"})

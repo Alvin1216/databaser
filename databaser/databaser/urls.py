@@ -38,6 +38,7 @@ urlpatterns = [
     path('avg_measurement_temp_for_people/', databaser_view.avg_measurement_temp_for_people),
     path('max_measurement_pressure_for_people/', databaser_view.max_measurement_pressure_for_people),
     path('min_measurement_pressure_for_people/', databaser_view.min_measurement_pressure_for_people),
+    path('sum_measurement_one_year_for_people/',databaser_view.sum_measurement_one_year_for_people),
     path('qwe/',databaser_view.qwe),
     path('qwe2/',databaser_view.qwe2)
 ]
